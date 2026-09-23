@@ -10,7 +10,6 @@
   --muted:#66707a;
   --line:#dfe4e8;
   --paper:#ffffff;
-  --page:#f2f6f9;
   --prov:#0867c8;
   --prov2:#37a3ea;
   --rec:#d9363e;
@@ -36,7 +35,7 @@ body{
 .article{
   width:min(900px,calc(100% - 32px));
   margin:36px auto 70px;
-  background:rgba(255,255,255,.97);
+  background:rgba(255,255,255,.98);
   padding:clamp(24px,4vw,54px);
   border:1px solid #e7ebee;
   box-shadow:0 18px 48px rgba(23,38,53,.08);
@@ -83,8 +82,10 @@ h2{
   letter-spacing:-.03em;
   font-weight:800;
 }
+
+/* ========= GRÁFICOS ========= */
 .data-viz{
-  margin:42px 0;
+  margin:44px 0;
   padding:24px 0 22px;
   border-top:2px solid var(--ink);
   border-bottom:1px solid var(--line);
@@ -118,7 +119,7 @@ h2{
 .prov{color:var(--prov)}
 .rec{color:var(--rec)}
 
-/* GRÁFICO 1: FCM */
+/* 1 — MAGNITUD */
 .race{
   display:grid;
   gap:18px;
@@ -145,7 +146,7 @@ h2{
 .race-fill{
   height:100%;
   width:0;
-  transition:width 1.4s cubic-bezier(.16,.85,.25,1);
+  transition:width 1.35s cubic-bezier(.16,.85,.25,1);
 }
 .race-fill.blue{background:linear-gradient(90deg,var(--prov),var(--prov2))}
 .race-fill.light{background:linear-gradient(90deg,#3f9cdf,#79c6ef)}
@@ -178,7 +179,7 @@ h2{
   line-height:.95;
 }
 
-/* GRÁFICO 2: DONUT */
+/* 2 — DONUT */
 .donut-layout{
   display:grid;
   grid-template-columns:270px 1fr;
@@ -210,7 +211,7 @@ h2{
   transition:stroke-width .2s, opacity .2s;
   cursor:pointer;
 }
-.donut-seg:hover{stroke-width:34}
+.donut-seg:hover,.donut-seg.active{stroke-width:35}
 .donut-center{
   position:absolute;
   inset:58px;
@@ -246,6 +247,10 @@ h2{
   padding:10px 0;
   border-bottom:1px solid #edf0f2;
   cursor:pointer;
+  transition:transform .18s ease,background .18s ease;
+}
+.legend-item:hover,.legend-item.active{
+  transform:translateX(4px);
 }
 .legend-item:last-child{border-bottom:0}
 .legend-dot{
@@ -267,7 +272,7 @@ h2{
   min-height:48px;
 }
 
-/* GRÁFICO 3: LOLLIPOP */
+/* 3 — LOLLIPOP */
 .lollipop{
   margin-top:26px;
   position:relative;
@@ -336,7 +341,7 @@ h2{
   letter-spacing:-.03em;
   white-space:nowrap;
   opacity:0;
-  transition:opacity .4s 1.1s;
+  transition:opacity .4s .9s;
 }
 .lollipop.is-visible .lolli-value{opacity:1}
 .ratio-note{
@@ -356,12 +361,76 @@ h2{
   color:#1d2731;
 }
 
+/* 4 — EDUCACIÓN */
+.education-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:24px;
+}
+.edu-card{
+  border:1px solid var(--line);
+  padding:20px;
+  min-height:180px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:#fff;
+}
+.edu-card:hover{
+  box-shadow:0 8px 24px rgba(20,38,56,.07);
+}
+.edu-label{
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  color:var(--muted);
+}
+.edu-number{
+  font-size:clamp(38px,5vw,58px);
+  line-height:.95;
+  margin-top:12px;
+  font-weight:900;
+  letter-spacing:-.05em;
+  color:var(--rec);
+}
+.edu-sub{
+  margin-top:8px;
+  font-size:13px;
+  line-height:1.42;
+  color:var(--muted);
+}
+.edu-track{
+  margin-top:20px;
+  height:8px;
+  background:#f0f2f4;
+  overflow:hidden;
+}
+.edu-fill{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,var(--rec),var(--rec2));
+  transition:width 1.3s cubic-bezier(.16,.85,.25,1);
+}
+.edu-summary{
+  margin-top:16px;
+  padding:15px 17px;
+  border-left:4px solid var(--rec);
+  background:linear-gradient(90deg,var(--soft-red),#fff);
+  font-size:14px;
+  line-height:1.45;
+}
+.edu-summary strong{font-weight:900}
+
 @media(max-width:760px){
   .article{width:min(100% - 18px,900px);padding:24px 18px;margin-top:12px}
-  .race-row{grid-template-columns:1fr}
+  p{font-size:18px}
+  .race-row{grid-template-columns:1fr;gap:7px}
   .race-value{text-align:left}
   .donut-layout{grid-template-columns:1fr}
   .donut-box{width:220px;height:220px}
+  .education-grid{grid-template-columns:1fr}
   .lolli-label{width:85px}
   .lolli-line,.lolli-dot{left:92px}
   .lolli-value{font-size:16px}
@@ -386,7 +455,6 @@ h2{
 
   <p>La diferencia supera los $7.200 millones. En otras palabras, solo el aporte realizado por Providencia al mecanismo de redistribución de recursos municipales fue superior a todo el presupuesto con el que Recoleta contó durante el año para financiar su gestión comunal.</p>
 
-  <!-- GRÁFICO 1: comparación principal -->
   <figure class="data-viz js-reveal" id="grafico-fcm">
     <div class="viz-kicker">Comparación</div>
     <h3>Aporte de Providencia al FCM vs. presupuesto total de Recoleta</h3>
@@ -411,9 +479,7 @@ h2{
     </div>
 
     <div class="big-callout">
-      <div>
-        <div class="label">Diferencia aproximada</div>
-      </div>
+      <div><div class="label">Diferencia aproximada</div></div>
       <div class="number">$7.201 millones</div>
     </div>
     <figcaption class="viz-source">Fuente: antecedentes presupuestarios citados en el reportaje.</figcaption>
@@ -421,7 +487,6 @@ h2{
 
   <p>De acuerdo con los antecedentes presupuestarios analizados, el aporte de Providencia estuvo compuesto principalmente por transferencias asociadas a patentes municipales, permisos de circulación y multas. Las patentes municipales representaron $36.782 millones, mientras que los permisos de circulación alcanzaron $12.424 millones y las multas, $1.308 millones.</p>
 
-  <!-- GRÁFICO 2: nuevo gráfico no-barra -->
   <figure class="data-viz js-reveal" id="grafico-origen">
     <div class="viz-kicker">Composición</div>
     <h3>¿De dónde viene el aporte de Providencia al FCM?</h3>
@@ -443,19 +508,19 @@ h2{
 
       <div>
         <div class="legend">
-          <div class="legend-item" data-label="Patentes municipales" data-value="$36.782 millones" data-pct="73,0%">
+          <div class="legend-item" data-index="0" data-label="Patentes municipales" data-value="$36.782 millones" data-pct="73,0%">
             <span class="legend-dot" style="background:#0867c8"></span>
             <span class="legend-name">Patentes municipales</span>
             <span class="legend-value">$36.782</span>
             <span class="legend-pct">73,0%</span>
           </div>
-          <div class="legend-item" data-label="Permisos de circulación" data-value="$12.424 millones" data-pct="24,6%">
+          <div class="legend-item" data-index="1" data-label="Permisos de circulación" data-value="$12.424 millones" data-pct="24,6%">
             <span class="legend-dot" style="background:#37a3ea"></span>
             <span class="legend-name">Permisos de circulación</span>
             <span class="legend-value">$12.424</span>
             <span class="legend-pct">24,6%</span>
           </div>
-          <div class="legend-item" data-label="Multas" data-value="$1.308 millones" data-pct="2,6%">
+          <div class="legend-item" data-index="2" data-label="Multas" data-value="$1.308 millones" data-pct="2,6%">
             <span class="legend-dot" style="background:#d79d1e"></span>
             <span class="legend-name">Multas</span>
             <span class="legend-value">$1.308</span>
@@ -482,7 +547,6 @@ h2{
 
   <p>La comparación debe entenderse dentro de las diferencias de población y de estructura de ingresos de ambas comunas. Como referencia, las proyecciones de población del INE utilizadas por la Biblioteca del Congreso Nacional sitúan para 2022 a Providencia en 161.568 habitantes y a Recoleta en 195.185.</p>
 
-  <!-- GRÁFICO 3: per cápita no-barra -->
   <figure class="data-viz js-reveal lollipop" id="grafico-percapita">
     <div class="viz-kicker">Brecha por habitante</div>
     <h3>Presupuesto municipal disponible por habitante</h3>
@@ -530,6 +594,38 @@ h2{
 
   <p>Al comenzar 2022, el área registró un saldo inicial de caja negativo de $3.308 millones. Después de la primera modificación presupuestaria, el déficit de arrastre quedó en -$2.055 millones y se mantuvo durante el resto del ejercicio.</p>
 
+  <figure class="data-viz js-reveal" id="grafico-educacion">
+    <div class="viz-kicker">Educación · Recoleta</div>
+    <h3>Déficit de arrastre durante 2022</h3>
+    <div class="viz-sub">Saldo inicial de caja y saldo tras la primera modificación presupuestaria</div>
+
+    <div class="education-grid">
+      <div class="edu-card">
+        <div>
+          <div class="edu-label">Inicio del año</div>
+          <div class="edu-number" data-counter="-3308">-$3.308 millones</div>
+          <div class="edu-sub">Saldo inicial de caja negativo.</div>
+        </div>
+        <div class="edu-track"><div class="edu-fill" data-w="100"></div></div>
+      </div>
+
+      <div class="edu-card">
+        <div>
+          <div class="edu-label">Tras primera modificación</div>
+          <div class="edu-number" data-counter="-2055">-$2.055 millones</div>
+          <div class="edu-sub">Déficit de arrastre que se mantuvo durante el resto del ejercicio.</div>
+        </div>
+        <div class="edu-track"><div class="edu-fill" data-w="62.1"></div></div>
+      </div>
+    </div>
+
+    <div class="edu-summary">
+      El déficit se redujo en aproximadamente <strong>$1.253 millones</strong>, pero el área continuó con saldo negativo durante el ejercicio.
+    </div>
+
+    <figcaption class="viz-source">Fuente: cifras consignadas en el reportaje.</figcaption>
+  </figure>
+
   <p>Esto significa que el área de Educación de Recoleta inició el período presupuestario con una situación financiera negativa que condicionó la administración de sus recursos durante el año. El municipio debió enfrentar este escenario mientras sostenía el funcionamiento de sus establecimientos educacionales, junto con compromisos financieros y obligaciones con proveedores.</p>
 
   <p>En el caso de Providencia, el escenario financiero municipal era considerablemente distinto. La Cuenta Pública 2022 registra ingresos municipales totales por $179.542 millones y señala que, después de considerar los compromisos correspondientes al Fondo Común Municipal, educación, salud y otros conceptos, quedaron $104.087 millones disponibles para la gestión municipal.</p>
@@ -546,84 +642,137 @@ h2{
 </article>
 
 <script>
-const $$ = s => [...document.querySelectorAll(s)];
+(function(){
+  "use strict";
 
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting || entry.target.dataset.played) return;
-    entry.target.dataset.played = "1";
+  function q(sel, ctx){ return (ctx || document).querySelector(sel); }
+  function qa(sel, ctx){ return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
 
-    if(entry.target.id === "grafico-fcm"){
-      entry.target.querySelectorAll(".race-fill").forEach((el,i)=>{
-        setTimeout(()=>el.style.width=el.dataset.w+"%", i*180);
+  function runChart(el){
+    if(!el || el.dataset.played === "1") return;
+    el.dataset.played = "1";
+
+    if(el.id === "grafico-fcm"){
+      qa(".race-fill",el).forEach(function(bar,i){
+        setTimeout(function(){ bar.style.width = bar.dataset.w + "%"; }, i*170);
       });
     }
 
-    if(entry.target.id === "grafico-origen"){
+    if(el.id === "grafico-origen"){
       animateDonut();
     }
 
-    if(entry.target.id === "grafico-percapita"){
-      entry.target.classList.add("is-visible");
-      const base = 116;
-      const width = Math.max(250, entry.target.querySelector(".scale").clientWidth - base - 20);
-      const p = 1189000/1200000;
-      const r = 274100/1200000;
-
-      document.getElementById("lineP").style.width = (width*p)+"px";
-      document.getElementById("lineR").style.width = (width*r)+"px";
-      document.getElementById("dotP").style.left = (base + width*p)+"px";
-      document.getElementById("dotR").style.left = (base + width*r)+"px";
-      document.getElementById("valP").style.left = (base + width*p + 16)+"px";
-      document.getElementById("valR").style.left = (base + width*r + 16)+"px";
+    if(el.id === "grafico-percapita"){
+      animateLollipop();
     }
-  });
-},{threshold:.28});
 
-$$(".js-reveal").forEach(el=>observer.observe(el));
+    if(el.id === "grafico-educacion"){
+      qa(".edu-fill",el).forEach(function(bar,i){
+        setTimeout(function(){ bar.style.width = bar.dataset.w + "%"; }, i*200);
+      });
+    }
+  }
 
-function animateDonut(){
-  const circumference = 2*Math.PI*78;
-  const parts = [
-    {el:document.getElementById("seg1"), pct:.730, offset:0},
-    {el:document.getElementById("seg2"), pct:.246, offset:.730},
-    {el:document.getElementById("seg3"), pct:.026, offset:.976}
-  ];
+  function animateDonut(){
+    var circumference = 2*Math.PI*78;
+    var parts = [
+      {el:q("#seg1"), pct:.730, offset:0},
+      {el:q("#seg2"), pct:.246, offset:.730},
+      {el:q("#seg3"), pct:.026, offset:.976}
+    ];
 
-  parts.forEach((p,i)=>{
-    const len = circumference*p.pct;
-    const gap = circumference-len;
-    p.el.style.strokeDasharray = `0 ${circumference}`;
-    p.el.style.strokeDashoffset = -circumference*p.offset;
-    setTimeout(()=>{
-      p.el.style.transition = "stroke-dasharray 1s ease";
-      p.el.style.strokeDasharray = `${len} ${gap}`;
-    }, i*180);
-  });
-}
+    parts.forEach(function(p,i){
+      var len = circumference*p.pct;
+      if(!p.el) return;
+      p.el.style.strokeDasharray = "0 " + circumference;
+      p.el.style.strokeDashoffset = -circumference*p.offset;
+      setTimeout(function(){
+        p.el.style.transition = "stroke-dasharray 1s ease";
+        p.el.style.strokeDasharray = len + " " + (circumference-len);
+      }, i*160);
+    });
+  }
 
-$$(".legend-item").forEach(item=>{
-  const show = ()=>{
-    document.getElementById("donutDetail").innerHTML =
-      `<strong>${item.dataset.label}</strong>: ${item.dataset.value} (${item.dataset.pct}).`;
-  };
-  item.addEventListener("mouseenter",show);
-  item.addEventListener("click",show);
-});
+  function animateLollipop(){
+    var box=q("#grafico-percapita");
+    if(!box) return;
+    box.classList.add("is-visible");
+    var scale=q(".scale",box);
+    var base = window.innerWidth <= 760 ? 92 : 116;
+    var usable = Math.max(210, scale.clientWidth-base-28);
+    var p = 1189000/1200000;
+    var r = 274100/1200000;
 
-window.addEventListener("resize",()=>{
-  const box=document.getElementById("grafico-percapita");
-  if(!box.dataset.played) return;
-  const base=116;
-  const width=Math.max(250,box.querySelector(".scale").clientWidth-base-20);
-  const p=1189000/1200000, r=274100/1200000;
-  document.getElementById("lineP").style.width=(width*p)+"px";
-  document.getElementById("lineR").style.width=(width*r)+"px";
-  document.getElementById("dotP").style.left=(base+width*p)+"px";
-  document.getElementById("dotR").style.left=(base+width*r)+"px";
-  document.getElementById("valP").style.left=(base+width*p+16)+"px";
-  document.getElementById("valR").style.left=(base+width*r+16)+"px";
-});
+    q("#lineP").style.width = (usable*p)+"px";
+    q("#lineR").style.width = (usable*r)+"px";
+    q("#dotP").style.left = (base+usable*p)+"px";
+    q("#dotR").style.left = (base+usable*r)+"px";
+    q("#valP").style.left = (base+usable*p+14)+"px";
+    q("#valR").style.left = (base+usable*r+14)+"px";
+  }
+
+  function setDonutActive(index){
+    qa(".legend-item").forEach(function(item){ item.classList.remove("active"); });
+    qa(".donut-seg").forEach(function(seg){ seg.classList.remove("active"); });
+
+    var item = qa(".legend-item")[index];
+    var seg = qa(".donut-seg")[index];
+    if(item) item.classList.add("active");
+    if(seg) seg.classList.add("active");
+
+    if(item){
+      q("#donutDetail").innerHTML =
+        "<strong>"+item.dataset.label+"</strong>: "+item.dataset.value+" ("+item.dataset.pct+").";
+    }
+  }
+
+  function initInteractions(){
+    qa(".legend-item").forEach(function(item){
+      var idx = Number(item.dataset.index);
+      item.addEventListener("mouseenter",function(){ setDonutActive(idx); });
+      item.addEventListener("click",function(){ setDonutActive(idx); });
+      item.addEventListener("touchstart",function(){ setDonutActive(idx); },{passive:true});
+    });
+
+    qa(".donut-seg").forEach(function(seg,index){
+      seg.addEventListener("mouseenter",function(){ setDonutActive(index); });
+      seg.addEventListener("click",function(){ setDonutActive(index); });
+      seg.addEventListener("touchstart",function(){ setDonutActive(index); },{passive:true});
+    });
+
+    if("IntersectionObserver" in window){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting) runChart(entry.target);
+        });
+      },{threshold:0.2,rootMargin:"0px 0px -8% 0px"});
+
+      qa(".js-reveal").forEach(function(el){ observer.observe(el); });
+    }else{
+      qa(".js-reveal").forEach(runChart);
+    }
+
+    /* Fallback: si Jekyll o el navegador carga la página ya avanzada */
+    setTimeout(function(){
+      qa(".js-reveal").forEach(function(el){
+        var r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight*1.15 && r.bottom > 0) runChart(el);
+      });
+    },300);
+
+    window.addEventListener("resize",function(){
+      if(q("#grafico-percapita") && q("#grafico-percapita").dataset.played==="1"){
+        animateLollipop();
+      }
+    });
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded",initInteractions);
+  }else{
+    initInteractions();
+  }
+})();
 </script>
 </body>
 </html>
